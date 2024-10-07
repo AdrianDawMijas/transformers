@@ -11,5 +11,11 @@ public class Transformers
             b.add(tran.transform(t));
         return b;
     }
+    public static <T> void applyDest(Transformer<T> tran, ArrayList<T> a) {
+        ArrayList<T> changedList = applyConst(tran,a);
+        for(T t : changedList){
+            a.set(changedList.indexOf(t), t);
+        }
+    }
 }
 
