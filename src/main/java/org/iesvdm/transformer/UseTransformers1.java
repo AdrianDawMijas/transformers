@@ -2,37 +2,32 @@ package org.iesvdm.transformer;
 
 import java.util.*;
 
-public class UseTransformers1
-{
-    public static void main(String[] args) throws Exception
-    {
-//        Scanner input = new Scanner(System.in);
-//        System.out.println("Enter some numbers (all on one line, separated by spaces):");
-//        String line = input.nextLine();
-//        String[] numbers = line.split(" ");
-//        ArrayList<Integer> a = new ArrayList<Integer>();
-//        for(int i=0; i<numbers.length; i++)
-//            a.add(new Integer(numbers[i]));
-//        System.out.println("The numbers are stored in an ArrayList: "+a);
-//        Transformer<Integer> trans = new TenTimes();
-//        ArrayList<Integer> b=Transformers.applyConst(trans,a);
-//        System.out.println("Multiplying the contents by 10 gives: "+b);
-
-
+public class UseTransformers1 {
+    public static void main(String[] args) {
+        // Configura el escáner para entrada del usuario
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter some numbers (all on one line, separated by spaces):");
+
+        // Pide al usuario que ingrese una lista de enteros separados por espacios
+        System.out.print("Enter a list of integers (separated by spaces): ");
         String line = input.nextLine();
-        String[] numbers = line.split(" ");
-        ArrayList<Integer> a = new ArrayList<Integer>();
-        for(int i=0; i<numbers.length; i++)
-            a.add(new Integer(numbers[i]));
-        System.out.println("The numbers are stored in an ArrayList: "+a);
+
+        // Convierte la entrada en una `LispList<Integer>`
+        LispList<Integer> ls1 = LispList.empty();
+        String[] numbers = line.trim().split("\\s+"); // Divide la entrada en números
+        for (int i = numbers.length - 1; i >= 0; i--) {
+            ls1 = ls1.cons(Integer.parseInt(numbers[i].trim())); // Construye la lista
+        }
+
+        // Crea un transformador que multiplica por 10
         Transformer<Integer> trans = new TenTimes();
-        Transformer<Integer> transformer = new TenTimes();
-        Transformers.applyDest(transformer,a);
-        System.out.println("Multiplying the contents by 10 gives: "+a);
 
+        // Aplica el transformador a la lista
+        LispList<Integer> ls2 = Transformers.applyLispList(trans, ls1);
+
+        // Muestra el resultado de la lista transformada
+        System.out.println("Multiplying the contents by 10 gives: " + ls2);
+
+        // Cierra el escáner
+        input.close();
     }
-
 }
-
